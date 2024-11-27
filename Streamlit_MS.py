@@ -1,12 +1,12 @@
 # Import required libraries
-import pandas as pd
-import numpy as np
-import datetime as dt
-import streamlit as st
-import plotly.express as px
+import pandas as pd # For data manipulation and analysis.
+import numpy as np # For numerical operations and handling arrays.
+import datetime as dt #  For working with dates and times.
+import streamlit as st # For creating interactive web applications.
+import plotly.express as px # For creating visually appealing, interactive visualizations.
 import calendar  # For month names
 
-# Set the page configuration for Streamlit
+# Set the page configuration for 
 st.set_page_config(
     page_title="Market Sales Dashboard",
     layout="wide"
