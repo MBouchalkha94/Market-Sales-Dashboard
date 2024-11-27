@@ -59,7 +59,7 @@ data = load_data()
 
 # Sidebar filters
 st.sidebar.header("Filters")
-branch_filter = st.sidebar.multiselect("Select Branch", options=data["Branch"].unique(), default=data["Branch"].unique())
+
 gender_filter = st.sidebar.multiselect("Select Gender", options=data["Gender"].unique(), default=data["Gender"].unique())
 customer_type_filter = st.sidebar.multiselect("Select Customer Type", options=data["Customer type"].unique(), default=data["Customer type"].unique())
 
@@ -109,10 +109,9 @@ time_of_day_filter = st.sidebar.radio(
 
 # Apply the filters
 filtered_data = data[
-    (data["Branch"].isin(branch_filter)) &
+    (data["City"].isin(City_filter)) &
     (data["Gender"].isin(gender_filter)) &
     (data["Customer type"].isin(customer_type_filter)) &
-    (data["City"].isin(city_filter)) &
     (data["Product line"].isin(product_line_filter)) &  # Added Product Line filter
     (data["Payment"].isin(payment_filter)) &
     (data["Quantity"].between(min_quantity, max_quantity)) &
@@ -157,23 +156,23 @@ with col3:
 # Visualizations
 st.header("Sales Insights")
 
-# Branch Performance
-branch_sales = filtered_data.groupby('Branch')['Quantity'].sum().reset_index()
-st.subheader("Total Sales by Branch")
-fig_branch = px.bar(
-    branch_sales,
-    x='Branch',
+# City Performance
+City_sales = filtered_data.groupby('City')['Quantity'].sum().reset_index()
+st.subheader("Total Sales by City")
+fig_City = px.bar(
+    City_sales,
+    x='City',
     y='Quantity',
-    title="Total Sales by Branch",
-    labels={"Branch": "Branch", "Quantity": "Total Sales"},
-    color='Branch',  # Use the 'Branch' column for color mapping
+    title="Total Sales by City",
+    labels={"City": "City", "Quantity": "Total Sales"},
+    color='City',  # Use the 'City' column for color mapping
     color_discrete_map={
-        "A": "#FF5733",  # Assign a specific color to Branch A
-        "B": "#33FF57",  # Assign a specific color to Branch B
-        "C": "#3357FF"   # Assign a specific color to Branch C
+        "A": "#FF5733",  # Assign a specific color to City A
+        "B": "#33FF57",  # Assign a specific color to City B
+        "C": "#3357FF"   # Assign a specific color to City C
     }
 )
-st.plotly_chart(fig_branch)
+st.plotly_chart(fig_City)
 
 
 
