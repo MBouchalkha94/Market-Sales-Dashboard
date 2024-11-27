@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # Define the file path
-file_path = r'C:\Apps\Data Analyst Project\Market Sales Data\archive\supermarket_sales new.csv'
+file_path = r'archive/supermarket_sales new.csv'
 
 # Load the dataset
 @st.cache
