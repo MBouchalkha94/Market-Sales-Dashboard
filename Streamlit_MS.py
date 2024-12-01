@@ -329,3 +329,14 @@ if len(columns_to_display) > 0:
     st.dataframe(formatted_data[columns_to_display], use_container_width=True)
 else:
     st.warning("Please select at least one column to display.")
+
+
+# GitHub and Streamlit links with my signature in the footer
+st.markdown(
+    """
+    ---
+    ### 📂 [GitHub Repository](https://github.com/MBouchalkha94/Market-Sales-Dashboard)
+    ### 🚀 [Live Demo on Streamlit](https://market-sales-dashboard-jfqezuu7y4vm9kczsrntnm.streamlit.app)
+    Created with ❤️ by **Mohamed Bouchalkha**
+    """
+)
