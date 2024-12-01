@@ -331,12 +331,13 @@ else:
     st.warning("Please select at least one column to display.")
 
 
-# GitHub and Streamlit links with my signature in the footer
-st.markdown(
+# GitHub and Streamlit link with my signature in the footer
+st.sidebar.markdown(
     """
     ---
-    ### 📂 [GitHub Repository](https://github.com/MBouchalkha94/Market-Sales-Dashboard)
-    ### 🚀 [Live Demo on Streamlit](https://market-sales-dashboard-jfqezuu7y4vm9kczsrntnm.streamlit.app)
-    Created with ❤️ by **Mohamed Bouchalkha**
-    """
+    <h3 style="font-size:12px;">📂 <a href="https://github.com/MBouchalkha94/Market-Sales-Dashboard" target="_blank">GitHub Repository</a></h3>
+    <h3 style="font-size:12px;">🚀 <a href="https://market-sales-dashboard-jfqezuu7y4vm9kczsrntnm.streamlit.app" target="_blank">Live Demo on Streamlit</a></h3>
+    <p style="font-size:10px;">Created with ❤️ by <b>Mohamed Bouchalkha</b></p>
+    """,
+    unsafe_allow_html=True
 )
