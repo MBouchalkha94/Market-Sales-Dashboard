@@ -92,7 +92,7 @@ def load_data(file_path=None, uploaded_file=None):
 
 
 # Load data dynamically or from a default path
-file_path = r'archive'
+file_path = r'archive\supermarket_sales new.csv'
 data = load_data(file_path=file_path, uploaded_file=uploaded_file)
 
 # Sidebar Filters: City, Gender, Customer Type
