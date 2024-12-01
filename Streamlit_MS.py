@@ -48,99 +48,55 @@ uploaded_file = st.sidebar.file_uploader(
 
 # Load the dataset
 @st.cache_data
-def load_data(file_path=None, uploaded_file=None):
-    if uploaded_file is not None:
-        data = pd.read_csv(uploaded_file)
-    else:
-        data = pd.read_csv(file_path)
+def load_data(uploaded_file=None):
+    try:
+        if uploaded_file is not None:
+            # Read the uploaded file
+            data = pd.read_csv(uploaded_file)
+        else:
+            st.error("No file uploaded. Please upload a CSV file.")
+            return None
 
-    # Calculate Total Amount
-    data['Total Amount'] = data['Quantity'] * data['Unit price'] + data['Tax 5%']
+        # Calculate Total Amount
+        data['Total Amount'] = data['Quantity'] * data['Unit price'] + data['Tax 5%']
 
-    # Add synthetic Date if missing
-    if 'Date' not in data.columns:
-        start_date = dt.date(2023, 1, 1)
-        end_date = dt.date(2023, 12, 31)
-        np.random.seed(42)
-        date_range = [
-            start_date + dt.timedelta(days=np.random.randint(0, (end_date - start_date).days))
-            for _ in range(len(data))
-        ]
-        data['Date'] = date_range
-    data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
+        # Add synthetic Date if missing
+        if 'Date' not in data.columns:
+            start_date = dt.date(2023, 1, 1)
+            end_date = dt.date(2023, 12, 31)
+            np.random.seed(42)
+            date_range = [
+                start_date + dt.timedelta(days=np.random.randint(0, (end_date - start_date).days))
+                for _ in range(len(data))
+            ]
+            data['Date'] = date_range
+        data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
 
-    # Ensure Time column is converted to datetime.time
-    if 'Time' in data.columns:
-        data['Time'] = pd.to_datetime(data['Time'], format='%H:%M:%S', errors='coerce').dt.time
-    else:
-        np.random.seed(42)
-        random_times = [
-            dt.time(np.random.randint(8, 21), np.random.randint(0, 60)) for _ in range(len(data))
-        ]
-        data['Time'] = random_times
+        # Ensure Time column is converted to datetime.time
+        if 'Time' in data.columns:
+            data['Time'] = pd.to_datetime(data['Time'], format='%H:%M:%S', errors='coerce').dt.time
+        else:
+            np.random.seed(42)
+            random_times = [
+                dt.time(np.random.randint(8, 21), np.random.randint(0, 60)) for _ in range(len(data))
+            ]
+            data['Time'] = random_times
 
-    # Extract Month and Hour
-    data['Month'] = data['Date'].dt.month
-    data['Hour'] = data['Time'].apply(lambda x: x.hour if pd.notnull(x) else None)
+        # Extract Month and Hour
+        data['Month'] = data['Date'].dt.month
+        data['Hour'] = data['Time'].apply(lambda x: x.hour if pd.notnull(x) else None)
 
-    # Add synthetic Payment column if missing
-    if 'Payment' not in data.columns:
-        np.random.seed(42)
-        data['Payment'] = np.random.choice(['Cash', 'Credit Card', 'E-Wallet'], size=len(data))
+        # Add synthetic Payment column if missing
+        if 'Payment' not in data.columns:
+            np.random.seed(42)
+            data['Payment'] = np.random.choice(['Cash', 'Credit Card', 'E-Wallet'], size=len(data))
 
-    return data
+        return data
 
+    except Exception as e:
+        st.error(f"An error occurred while loading the data: {e}")
+        return None
 
-# Load data dynamically or from a default path
-file_path = r'archive\supermarket_sales new.csv'
-data = load_data(file_path=file_path, uploaded_file=uploaded_file)
-
-# Sidebar Filters: City, Gender, Customer Type
-
-
-
-with st.sidebar.expander("🛠️ Filters", expanded=True):
-    st.subheader("City")
-    city_filter = st.multiselect(
-        "Select City", 
-        options=data["City"].unique(), 
-        default=data["City"].unique(),
-        key="Filter data by city."
-    )
-
-    st.subheader("Gender")
-    gender_filter = st.multiselect(
-        "Select Gender", 
-        options=data["Gender"].unique(), 
-        default=data["Gender"].unique(),
-        key="Filter data by customer gender."
-    )
-
-    st.subheader("Customer Type")
-    customer_type_filter = st.multiselect(
-        "Select Customer Type", 
-        options=data["Customer type"].unique(), 
-        default=data["Customer type"].unique(),
-        key="Filter data by membership status."
-    )
-
-# Sidebar Filters: Product Line and Payment Method
-with st.sidebar.expander("🛍️ Product and Payment Filters", expanded=True):
-    st.subheader("Product Line")
-    product_line_filter = st.multiselect(
-        "Select Product Line",
-        options=data["Product line"].unique(),
-        default=data["Product line"].unique(),
-        key="Filter data by product line."
-    )
-
-    st.subheader("Payment Method")
-    payment_filter = st.multiselect(
-        "Select Payment Method",
-        options=data["Payment"].unique(),
-        default=data["Payment"].unique(),
-        key="Filter data by payment method used."
-    )
 
 # Sidebar Filters: Date Range
 with st.sidebar.expander("📅 Date Range Filters", expanded=False):
