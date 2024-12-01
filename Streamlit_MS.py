@@ -6,7 +6,7 @@ import streamlit as st
 import plotly.express as px
 import calendar  # For month names
 
-# Set the page configuration for Streamlit
+# configuration page for Streamlit
 st.set_page_config(
     page_title="Market Sales Dashboard",
     layout="wide",
@@ -95,10 +95,8 @@ def load_data(file_path=None, uploaded_file=None):
 file_path = r'archive/supermarket_sales new.csv'
 data = load_data(file_path=file_path, uploaded_file=uploaded_file)
 
+
 # Sidebar Filters: City, Gender, Customer Type
-
-
-
 with st.sidebar.expander("🛠️ Filters", expanded=True):
     st.subheader("City")
     city_filter = st.multiselect(
