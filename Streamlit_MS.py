@@ -335,7 +335,7 @@ st.sidebar.markdown(
     ---
     <h3 style="font-size:12px;">📂 <a href="https://github.com/MBouchalkha94/Market-Sales-Dashboard" target="_blank">GitHub Repository</a></h3>
     <h3 style="font-size:12px;">🚀 <a href="https://market-sales-dashboard-jfqezuu7y4vm9kczsrntnm.streamlit.app" target="_blank">Live Demo on Streamlit</a></h3>
-    <p style="font-size:11px;">Created with ❤️ by <b>MOHAMED BOUCHALKHA</b></p>
+    <p style="font-size:11px;">Created by <b>MOHAMED BOUCHALKHA</b></p>
     """,
     unsafe_allow_html=True
 )
